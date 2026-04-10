@@ -1,0 +1,47 @@
+{
+  "expo": {
+    "name": "Online Shopping",
+    "slug": "online-shopping",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Capture front and side photos for body measurements.",
+        "NSPhotoLibraryUsageDescription": "Select photos for body scan."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0f172a"
+      },
+      "permissions": ["CAMERA", "READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"]
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow access to photos for your body scan.",
+          "cameraPermission": "Allow camera for your body scan."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow camera for AR try-on and body scan."
+        }
+      ]
+    ],
+    "extra": {
+      "apiUrl": "http://10.0.2.2:8000/api"
+    }
+  }
+}

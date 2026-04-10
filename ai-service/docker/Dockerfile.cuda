@@ -1,0 +1,16 @@
+# Phase 3 — GPU inference image (template). Do not use as-is; uncomment and pin CUDA to your driver.
+#
+# Example:
+#   docker build -f docker/Dockerfile.cuda -t online-shopping-ai:cuda .
+#
+# FROM nvidia/cuda:12.3.2-runtime-ubuntu22.04
+# WORKDIR /app
+# RUN apt-get update && apt-get install -y python3-pip libgl1 libglib2.0-0 \
+#     && rm -rf /var/lib/apt/lists/*
+# COPY requirements.txt requirements-gpu.txt ./
+# RUN pip install --no-cache-dir -r requirements.txt -r requirements-gpu.txt
+# COPY app ./app
+# COPY models ./models
+# ENV NVIDIA_VISIBLE_DEVICES=all
+# EXPOSE 8088
+# CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8088"]

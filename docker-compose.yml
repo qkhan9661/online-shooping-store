@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: online_shopping
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  python-ai-service:
+    build:
+      context: ./ai-service
+    ports:
+      - "8088:8088"
+
+  laravel-app:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - laravel_storage:/var/www/html/storage
+    environment:
+      APP_NAME: OnlineShopping
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: online_shopping
+      DB_USERNAME: postgres
+      DB_PASSWORD: secret
+      QUEUE_CONNECTION: redis
+      REDIS_CLIENT: predis
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      CACHE_STORE: redis
+      SESSION_DRIVER: array
+      FILESYSTEM_DISK: public
+      AI_SERVICE_URL: http://python-ai-service:8088
+      AI_SERVICE_TIMEOUT: "120"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      python-ai-service:
+        condition: service_started
+
+volumes:
+  pgdata:
+  laravel_storage:

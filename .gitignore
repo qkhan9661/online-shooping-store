@@ -1,0 +1,9 @@
+node_modules/
+vendor/
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example

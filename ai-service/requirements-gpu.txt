@@ -1,0 +1,4 @@
+# Phase 3 — pin versions to match CUDA driver on your nodes (example only).
+# torch==2.5.1+cu121 -f https://download.pytorch.org/whl/torch_stable.html
+# onnxruntime-gpu>=1.19.0
+# tensorrt (install via NVIDIA PyPI / system packages)
